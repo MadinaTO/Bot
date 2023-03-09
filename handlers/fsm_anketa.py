@@ -29,7 +29,7 @@ async def load_name(message: types.Message, state: FSMContext):
         data['name'] = message.text
         print(data)
     await FSMAdmin.next()
-    await message.answer('Age?')
+    await message.answer('Age?', reply_markup=client_kb.cancel_markup)
 
 
 async def load_age(message: types.Message, state: FSMContext):
