@@ -22,11 +22,6 @@ async def echo(message: types.Message):
             b = await bot.send_dice(message.chat.id, emoji='🎰')
             print(b.dice.value)
 
-# async def python_word(message: types.Message):
-#     if message.text == 'python':
-#         await bot.send_dice(message.chat.id, emoji='🎰')
-
 
 def register_handlers_extra(dp: Dispatcher):
     dp.register_message_handler(echo)
-    # dp.register_message_handler(python_word)

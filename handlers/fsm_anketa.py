@@ -10,6 +10,7 @@ class FSMAdmin(StatesGroup):
     age = State()
     gender = State()
     region = State()
+    photo = State()
     submit = State()
 
 
@@ -55,7 +56,20 @@ async def load_region(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data['region'] = message.text
     await FSMAdmin.next()
-    await message.answer("Is everything right?", reply_markup=client_kb.submit_markup)
+    await message.answer("Your photo", reply_markup=client_kb.cancel_markup)
+
+
+async def load_photo(message: types.Message, state: FSMContext):
+    async with state.proxy() as data:
+        data['photo'] = message.photo[0].file_id
+        await message.answer_photo(
+            data["photo"],
+            caption=f"{data['name']} {data['age']} {data['gender']} "
+                    f"{data['region']}\n\n{data['username']}"
+        )
+    await FSMAdmin.next()
+    await message.answer("Все верно?",
+                         reply_markup=client_kb.submit_markup)
 
 
 async def submit(message: types.Message, state: FSMContext):
@@ -86,5 +100,6 @@ def register_handlers_anketa(dp: Dispatcher):
     dp.register_message_handler(load_age, state=FSMAdmin.age)
     dp.register_message_handler(load_gender, state=FSMAdmin.gender)
     dp.register_message_handler(load_region, state=FSMAdmin.region)
+    dp.register_message_handler(load_photo, state=FSMAdmin.photo,
+                                content_types=['photo'])
     dp.register_message_handler(submit, state=FSMAdmin.submit)
-
