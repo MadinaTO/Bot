@@ -9,13 +9,14 @@ start_markup = ReplyKeyboardMarkup(
 start_button = KeyboardButton('/start')
 info_button = KeyboardButton('/info')
 quiz_button = KeyboardButton('/quiz')
+reg_button = KeyboardButton("/reg")
 
 share_location = KeyboardButton('Share location', request_location=True)
 share_contact = KeyboardButton('Share contact', request_contact=True)
 user = KeyboardButton('user', request_user=None)
 
 
-start_markup.add(start_button, info_button, quiz_button,
+start_markup.add(start_button, info_button, quiz_button, reg_button,
                  share_location, share_contact, user)
 
 

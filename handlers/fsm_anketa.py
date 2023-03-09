@@ -74,6 +74,7 @@ async def load_photo(message: types.Message, state: FSMContext):
 
 async def submit(message: types.Message, state: FSMContext):
     if message.text.lower() == "yeah":
+        await message.answer("Bye", reply_markup=client_kb.start_markup)
         await state.finish()
     elif message.text.lower() == "repeat":
         await FSMAdmin.name.set()
@@ -86,7 +87,7 @@ async def cancel_reg(message: types.Message, state: FSMContext):
     current_state = await state.get_state()
     if current_state is not None:
         await state.finish()
-        await message.answer("Canceled")
+        await message.answer("Canceled", reply_markup=client_kb.start_markup)
 
 
 def register_handlers_anketa(dp: Dispatcher):
